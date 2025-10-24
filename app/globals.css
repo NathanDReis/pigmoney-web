@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
-:root {
+/* :root {
   --primary: #ff6b57ff;
   --secondary: #ffada2ff;
   --background: #f1f1f1;
   --text: #000000;
   --white: #ffffff;
   --error: tomato;
-}
+} */
 
 body {
   font-family: Arial, Helvetica, sans-serif;
