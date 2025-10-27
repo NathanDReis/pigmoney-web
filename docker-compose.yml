@@ -10,35 +10,8 @@ services:
     environment:
       - NODE_ENV=production
     expose:
-      - "3000"
+      - "3002"
     networks:
       - webnet
-
-  nginx:
-    image: nginx:latest
-    container_name: nginx_reverse_proxy
-    restart: always
-    depends_on:
-      - app
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/www:/var/www/html
-      - ./nginx/certbot:/etc/letsencrypt
-    networks:
-      - webnet
-
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    depends_on:
-      - nginx
-    volumes:
-      - ./nginx/certbot:/etc/letsencrypt
-      - ./nginx/www:/var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --email nathandavidreis@gmail.com --agree-tos --no-eff-email -d pigmoney.online -d www.pigmoney.online
-
 networks:
   webnet:
