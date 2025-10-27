@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pigmoney_web
+    restart: always
+    environment:
+      - NODE_ENV=production
+    expose:
+      - "3000"
+    networks:
+      - webnet
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_reverse_proxy
+    restart: always
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/certbot:/etc/letsencrypt
+    networks:
+      - webnet
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    depends_on:
+      - nginx
+    volumes:
+      - ./nginx/certbot:/etc/letsencrypt
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    command: certonly --webroot --webroot-path=/var/www/html --email seuemail@exemplo.com --agree-tos --no-eff-email -d pigmoney.online -d www.pigmoney.online
+
+networks:
+  webnet:
