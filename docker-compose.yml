@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: pigmoney_web
+    container_name: pigmoney-web
     restart: always
     environment:
       - NODE_ENV=production
@@ -14,7 +14,7 @@ services:
     networks:
       - webnet
 
- nginx:
+  nginx:
     image: nginx:latest
     container_name: nginx_reverse_proxy
     restart: always
@@ -30,7 +30,7 @@ services:
     networks:
       - webnet
 
-    certbot:
+  certbot:
     image: certbot/certbot
     container_name: certbot
     depends_on:
@@ -38,7 +38,7 @@ services:
     volumes:
       - ./nginx/certbot:/etc/letsencrypt
       - ./nginx/www:/var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --email nd7380075@gmail.com --agree-tos --no-eff-email -d pigmoney.online -d www.pigmoney.online
+    command: certonly --webroot --webroot-path=/var/www/html --email nathandavidreis@gmail.com --agree-tos --no-eff-email -d pigmoney.online -d www.pigmoney.online
 
 networks:
   webnet:
