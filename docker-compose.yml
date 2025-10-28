@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: pigmoney-web
+    container_name: web-pigmoney
     restart: always
     environment:
       - NODE_ENV=production
